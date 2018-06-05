@@ -1,13 +1,16 @@
 #!/bin/bash
 
 export GPG_TTY=$(tty)
-git commit -S -m "$1"
+
 CURRENT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
 if [ $CURRENT_BRANCH == "master" ] 
 then 
-echo "Master!"
-else
-echo "DUH"
+echo "You are currently about to push to master do you want to do that? y/n"
+read INP 
+if [ $INP == "y" ]
+then 
+git commit -S -m "$1"
+git push origin $CURRENT_BRANCH
+fi
 fi
 
-git push origin $CURRENT_BRANCH
